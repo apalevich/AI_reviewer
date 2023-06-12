@@ -2,9 +2,11 @@
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
+const history = require('connect-history-api-fallback');
 
 const app = express();
 app.use(express.json());
+app.use(history());
 app.use(
     cors({
         origin: 'http://localhost:5173' // Allow requests from this origin
