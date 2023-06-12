@@ -5,6 +5,7 @@
             <input type="url" name="url" id="url" v-model="url" required placeholder="https://github.com/">
             <button type="submit">Get data</button>
         </form>
+        <pre>{{ res }}</pre>
     </div>
 </template>
 <script>
@@ -20,13 +21,12 @@ export default {
         async getRepo() {
             const url = new URL(this.url);
             const [owner, repo] = url.pathname.slice(1).split('/');
-            console.log(owner, repo);
 
             try {
                 const response = await fetch(`http://localhost:8000/getrepo/${owner}/${repo}`);
                 const data = await response.json();
-                this.res = data;
-                console.log('data', data);
+                this.res = atob(data.content);
+                console.log('data', atob(data));
             } catch (error) {
                 console.error(error)
             }
@@ -34,6 +34,3 @@ export default {
     },
 }
 </script>
-<style scoped>
-
-</style>
