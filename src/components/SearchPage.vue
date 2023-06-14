@@ -1,12 +1,12 @@
 <template>
-    <div class="w-screen h-screen bg-indigo-500 flex items-center justify-center flex-col">
-        <form @submit.prevent="getRepo" class="flex flex-col">
-            <label for="url">Paste link to a public GitHub repository</label>
-            <input type="url" name="url" id="url" v-model="url" required placeholder="https://github.com/">
-            <button type="submit">Get data</button>
-        </form>
-        <pre>{{ res }}</pre>
-    </div>
+    <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, ratione debitis quis est labore voluptatibus! Eaque cupiditate minima, at placeat totam, magni doloremque veniam neque porro libero rerum unde voluptatem!</div>
+    <v-form @submit.prevent>
+        <v-text-field
+        label="Link to the public repo on GitHub"
+        variant="outlined"
+        ></v-text-field>
+      <v-btn type="submit" block class="mt-2">Submit</v-btn>
+    </v-form>
 </template>
 <script>
 export default {

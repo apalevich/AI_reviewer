@@ -30,6 +30,7 @@
     "eslint": "^8.39.0",
     "eslint-plugin-vue": "^9.11.0",
     "jsdom": "^22.0.0",
+    "material-design-icons-iconfont": "^6.7.0",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.8",
     "sass": "^1.63.3",

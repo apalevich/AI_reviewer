@@ -1,9 +1,9 @@
 import { createApp } from "vue";
-import router from '@/src/router';
 import App from '@/src/components/App.vue';
+import router from '@/src/router';
+import vuetify from "@/vuetify.config.js";
 
-const app = createApp(App);
-
-app
-.use(router)
-.mount('#app')
+createApp(App)
+    .use(router)
+    .use(vuetify)
+    .mount('#app')

@@ -1,12 +1,17 @@
 <template>
-    <h1>Repo Overview page</h1>
-    <p>
-        Passed info:
-        <ul>
-            <li>author: {{ userName }}</li>
-            <li>repository: {{ repoName  }}</li>
-        </ul>
-    </p>
+    <v-app-bar title="Application bar"></v-app-bar>
+
+    <v-navigation-drawer>
+    <v-list>
+        <v-list-item><v-list-item-title>File 1</v-list-item-title></v-list-item>
+        <v-list-item><v-list-item-title>File 2</v-list-item-title></v-list-item>
+    </v-list>
+    </v-navigation-drawer>
+
+    <v-main >
+        <h1>{{userName}}</h1>
+        <h2>{{repoName}}</h2>
+    </v-main>
 </template>
 <script>
 export default {
