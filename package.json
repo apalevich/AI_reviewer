@@ -1,0 +1,46 @@
+{
+  "name": "ai_reviewer",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:frontend": "webpack serve",
+    "start:backend": "node server.js",
+    "build": "webpack",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "format": "prettier --write src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apalevich/AI_reviewer.git"
+  },
+  "author": "Artem Palevich",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/apalevich/AI_reviewer/issues"
+  },
+  "homepage": "https://github.com/apalevich/AI_reviewer#readme",
+  "devDependencies": {
+    "@vue/eslint-config-prettier": "^7.1.0",
+    "css-loader": "^6.8.1",
+    "eslint": "^8.39.0",
+    "eslint-plugin-vue": "^9.11.0",
+    "html-webpack-plugin": "^5.5.3",
+    "prettier": "^2.8.8",
+    "sass": "^1.63.4",
+    "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.3",
+    "vue-loader": "^17.2.2",
+    "vue-template-compiler": "^2.7.14",
+    "webpack": "^5.87.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "dependencies": {
+    "pinia": "^2.1.3",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.2",
+    "vuetify": "^3.3.3"
+  }
+}
