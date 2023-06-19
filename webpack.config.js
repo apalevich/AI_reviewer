@@ -1,7 +1,8 @@
 /* eslint-disable no-undef */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { VueLoaderPlugin } = require('vue-loader')
+const { VueLoaderPlugin } = require('vue-loader');
+const { VuetifyPlugin } = require('webpack-plugin-vuetify');
 
 module.exports = {
     mode: 'development',
@@ -14,13 +15,10 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.s[ac]ss$/i,
+                test: /\.(css|sass|scss)$/i,
                 use: [
-                    // Creates `style` nodes from JS strings
                     "style-loader",
-                    // Translates CSS into CommonJS
                     "css-loader",
-                    // Compiles Sass to CSS
                     "sass-loader",
                 ],
             },
@@ -41,6 +39,9 @@ module.exports = {
             template: './src/assets/index.html'
         }),
         new VueLoaderPlugin(),
+        new VuetifyPlugin({
+            styles: { configFile: './src/settings.scss' }
+        })
     ],
     devServer: {
         static: './dist',

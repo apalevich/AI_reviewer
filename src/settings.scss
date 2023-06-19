@@ -1,12 +1,8 @@
-@forward 'vuetify/settings' with (
-  $utilities: false,
-  $button-height: 40px,
+@use 'vuetify/settings' with (
+//   // Place SASS variable overrides here
   $button-background: orange,
-);
-
-@forward 'vuetify' with (
   $body-font-family: 'Open Sans',
-)
+);
 
 /* font-family: 'IBM Plex Mono', monospace;
 font-family: 'Open Sans', sans-serif; */
