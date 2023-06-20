@@ -1,36 +1,75 @@
 <template>
-    <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, ratione debitis quis est labore voluptatibus! Eaque cupiditate minima, at placeat totam, magni doloremque veniam neque porro libero rerum unde voluptatem!</div>
-    <v-form @submit.prevent>
-        <v-text-field
-        label="Link to the public repo on GitHub"
-        variant="outlined"
-        ></v-text-field>
-      <v-btn type="submit" block class="mt-2">Submit</v-btn>
-    </v-form>
+    <v-container class="flex-column">
+        <v-row class="align-center flex-column w-100">
+            <h1 class="text-h1 font-weight-medium">AI Reviewer</h1>
+        </v-row>
+        <v-row class="align-center flex-column w-100">
+            <v-form @submit.prevent class="w-50 d-flex">
+                <v-text-field
+                    label="Link to the public repo on GitHub"
+                    variant="solo"
+                    bg-color="white"
+                    autofocus
+                    clearable
+                    v-model="url"
+                ></v-text-field>
+                <v-btn
+                    type="submit"
+                    @click="getRepo"
+                    :loading="loading"
+                    icon="arrow_forward"
+                    width="56"
+                    height="56"
+                />
+            </v-form>
+        </v-row>
+    </v-container>
 </template>
 <script>
 export default {
     name: 'SearchPage',
     data() {
         return {
-            url: '',
-            res: {},
+            loading: false,
+            url: 'https://github.com/apalevich/react-chatgpt-clone/blob/main/package.json',
         }
     },
     methods: {
+        parseUrl() {
+            const processedUrl = new URL(this.url);
+            const [owner, repo] = processedUrl.pathname.slice(1).split('/');
+            return {
+                owner,
+                repo
+            };
+        },
         async getRepo() {
-            const url = new URL(this.url);
-            const [owner, repo] = url.pathname.slice(1).split('/');
-
+            this.loading = true;
+            const { owner, repo } = this.parseUrl();
             try {
                 const response = await fetch(`http://localhost:8000/getrepo/${owner}/${repo}`);
                 const data = await response.json();
-                this.res = atob(data.content);
-                console.log('data', atob(data));
+                if (data.status === 404) {
+                    throw new Error(data.message);
+                }
+                this.$router.push({ path: `/${owner}/:${repo}` })
             } catch (error) {
-                console.error(error)
+                alert('Something wrong');
+                console.error(error);
             }
+            this.loading = false;
         }
     },
 }
 </script>
+<style lang="scss">
+h1 {
+  font-size: 72px;
+  background: -webkit-linear-gradient(#FAFBFC, #414040);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.v-form {
+    gap: 12px;
+}
+</style>

@@ -2,14 +2,14 @@
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
-const history = require('connect-history-api-fallback');
+// const history = require('connect-history-api-fallback');
 
 const app = express();
 app.use(express.json());
-app.use(history());
+// app.use(history());
 app.use(
     cors({
-        origin: 'http://localhost:5173' // Allow requests from this origin
+        origin: 'http://localhost:8080' // Allow requests from this origin
     })
 );
 
@@ -23,8 +23,8 @@ app.get('/getrepo/:owner/:repo', async (req, res) => {
         const data = response.data;
         res.json(data);
     } catch (error) {
-        console.error('error');
-        res.status(500).json({ error: 'An error occurred.' });
+        console.error('error:', error);
+        res.status(500).json(error);
     }
 });
 
