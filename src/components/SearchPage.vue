@@ -26,6 +26,9 @@
     </v-container>
 </template>
 <script>
+import { mapStores } from 'pinia';
+import { useRepoStore } from '@/src/stores/repoStore';
+
 export default {
     name: 'SearchPage',
     data() {
@@ -33,6 +36,9 @@ export default {
             loading: false,
             url: 'https://github.com/apalevich/react-chatgpt-clone/blob/main/package.json',
         }
+    },
+    computed: {
+        ...mapStores(useRepoStore)
     },
     methods: {
         parseUrl() {
@@ -49,10 +55,13 @@ export default {
             try {
                 const response = await fetch(`http://localhost:8000/getrepo/${owner}/${repo}`);
                 const data = await response.json();
+                
                 if (data.status === 404) {
                     throw new Error(data.message);
                 }
-                this.$router.push({ path: `/${owner}/:${repo}` })
+
+                this.repoStore.loadRepoData(data);
+                this.$router.push({ path: `/${owner}/${repo}` })
             } catch (error) {
                 alert('Something wrong');
                 console.error(error);
