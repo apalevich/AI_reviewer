@@ -28,6 +28,18 @@ app.get('/getrepo/:owner/:repo', async (req, res) => {
     }
 });
 
+app.get('/getcontent/:owner/:repo/', async (req, res) => {
+    const { owner, repo } = req.params;
+    try {
+        const response = await axios.get(`${BASE_URL}/repos/${owner}/${repo}/contents`);
+        const data = response.data;
+        res.json(data);
+    } catch (error) {
+        console.error('error:', error);
+        res.status(500).json(error);
+    }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
