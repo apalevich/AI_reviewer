@@ -3,16 +3,24 @@ import { defineStore } from "pinia";
 export const useRepoStore = defineStore({
     id: 'repo',
     state: () => ({
-        data: null
+        author: null,
+        repo: null,
+        content: null
     }),
     actions: {
-        loadRepoData(data) {
-            this.data = data;
-        }
+        setAuthor (data) {
+            this.author = data
+        },
+        setRepo(data) {
+            this.repo = data
+        },
+        setContent(data) {
+            this.content = data
+        },
     },
     getters: {
-        repoData () {
-            return this.data;
-        }
+        getAuthor: (s) => s.author,
+        getRepo: (s) => s.repo,
+        getContent: (s) => s.content,
     }
 })

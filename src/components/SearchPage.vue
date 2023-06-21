@@ -60,7 +60,7 @@ export default {
                     throw new Error(data.message);
                 }
 
-                this.repoStore.loadRepoData(data);
+                this.repoStore.setRepo(data);
                 this.$router.push({ path: `/${owner}/${repo}` })
             } catch (error) {
                 alert('Something wrong');
@@ -71,7 +71,7 @@ export default {
     },
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 h1 {
   font-size: 72px;
   background: -webkit-linear-gradient(#FAFBFC, #414040);
