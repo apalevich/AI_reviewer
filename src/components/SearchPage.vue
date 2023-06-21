@@ -26,7 +26,7 @@
     </v-container>
 </template>
 <script>
-import { mapStores } from 'pinia';
+import { mapActions, mapStores } from 'pinia';
 import { useRepoStore } from '@/src/stores/repoStore';
 
 export default {
@@ -38,9 +38,10 @@ export default {
         }
     },
     computed: {
-        ...mapStores(useRepoStore)
+        ...mapStores(useRepoStore),
     },
     methods: {
+        ...mapActions(useRepoStore, ['setRepo']),
         parseUrl() {
             const processedUrl = new URL(this.url);
             const [owner, repo] = processedUrl.pathname.slice(1).split('/');
@@ -56,11 +57,11 @@ export default {
                 const response = await fetch(`http://localhost:8000/getrepo/${owner}/${repo}`);
                 const data = await response.json();
                 
-                if (data.status === 404) {
+                if (data.status) {
                     throw new Error(data.message);
                 }
 
-                this.repoStore.setRepo(data);
+                this.setRepo(data);
                 this.$router.push({ path: `/${owner}/${repo}` })
             } catch (error) {
                 alert('Something wrong');
