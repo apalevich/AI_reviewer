@@ -1,24 +1,58 @@
 <template>
-    <v-app-bar title="Application bar"></v-app-bar>
+    <v-app-bar title="Application bar">
+        <v-btn @click="console.log(fileList)">LOG</v-btn>
+    </v-app-bar>
 
     <v-navigation-drawer>
-    <v-list>
-        <v-list-item
-            v-for="item in content"
-            :key="item.sha"
-            :title="item.name"
-            :prepend-icon="item.type === 'file' ? 'description' : 'folder'"
-        />
-    </v-list>
+        <div
+            v-if="repoLoading"
+            class="text-center"
+        >
+            <v-progress-circular indeterminate/>
+        </div>
+        <v-list
+            v-else
+            v-model:opened="open"
+            open-strategy="single"
+        > 
+            <template v-for="item in content">
+                <v-list-group 
+                    v-if="item.type === 'dir'"
+                    :value="item.name"
+                >
+                    <template v-slot:activator="{ props }">
+                        <v-list-item
+                            v-bind="props"
+                            :title="item.name"
+                        />
+                    </template>
+                    <div class="text-center" v-if="!item.content">
+                        <v-progress-circular indeterminate></v-progress-circular>
+                    </div>
+                    <v-list-item
+                        v-else
+                        prepend-icon="description"
+                    />
+                </v-list-group>
+                
+                <v-list-item
+                    v-if="item.type === 'file'"
+                    :key="item.sha"
+                    :value="item.name"
+                    :title="item.name"
+                    prepend-icon="description"
+                />
+            </template>
+        </v-list>
     </v-navigation-drawer>
 
     <v-main >
-        <h1>{{this.authorName}}</h1>
-        <h2>{{this.repoName}}</h2>
+        <h1>{{authorName}}</h1>
+        <h2>{{repoName}}</h2>
     </v-main>
 </template>
 <script>
-import { mapStores } from 'pinia';
+import { mapStores, mapActions, mapState } from 'pinia';
 import { useRepoStore } from '@/src/stores/repoStore';
 // import FileListItem from './FileListItem.vue';
 
@@ -27,34 +61,33 @@ export default {
     data() {
         return {
             repoLoading: false,
-            authorName: 'apalevich',
-            repoName: 'react-chatgpt-clone',
-            content: null,
+            open: [],
         }
     },
     computed: {
         ...mapStores(useRepoStore),
+        ...mapState(useRepoStore, ['content', 'author', 'authorName', 'repoName'])
     },
     mounted() {
-        this.repoStore.setAuthor(this.repoStore.getRepo.owner)
-        this.getContent()
+        this.loadContent();
     },
     methods: {
-        async getContent() {
+        ...mapActions(useRepoStore, ['setContent', 'updateContent', 'setAuthor']),
+        async loadContent() {
             this.repoLoading = true;
             
             try {
                 const response = await fetch(`http://localhost:8000/getcontent/${this.authorName}/${this.repoName}`);
                 const data = await response.json();
 
-                this.repoStore.setContent(data);
-                this.content = data;
+                this.setContent(data);
             } catch (error) {
                 alert('Something wrong');
                 console.error(error);
             }
-            this.loading = false;
-        }
+            this.repoLoading = false;
+        },
+        // async.getFolder()
     }
 }
 </script>
