@@ -24,3 +24,6 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+
+test_data
+test_data/*
