@@ -27,3 +27,5 @@ coverage
 
 test_data
 test_data/*
+
+prompt.js
